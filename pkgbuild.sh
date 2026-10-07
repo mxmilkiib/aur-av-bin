@@ -5,10 +5,10 @@ set -ex
 # Environment variables.
 makepkg_conf="/home/pkguser/.makepkg.conf"
 if [ ! -f ${makepkg_conf} ] || ! $(grep -Fxq "PACKAGER" ${makepkg_conf}) ; then
-# echo "No makepkg.conf or no PACKAGER variable found: exporting it..."
-  export PACKAGER="${1/\// } <${2}@travis.build.id>"
+  export PACKAGER="${1/\// } <${2}@github.actions>"
 fi
 export AURDEST="$(pwd)/src"
+export AUR_SYNC_USE_NINJA=1
 
 # Variables declaration.
 declare -r pkgrepo="${1#*/}"
@@ -22,34 +22,40 @@ for pkgfile in "pkglist" "pkgkeys"; do
 done
 
 # Load files.
-mapfile pkglist < "pkglist"
-mapfile pkgkeys < "pkgkeys"
+mapfile -t pkglist < "pkglist"
+mapfile -t pkgkeys < "pkgkeys"
 
-# Create package list with dependencies.
-mapfile pkgdeps < <(echo ${pkglist[@]} | aur depends -n)
+# Create package list with dependencies. aur-depends prints
+# "pkgname<TAB>depends" pairs; flatten both columns to a plain list.
+if (( ${#pkglist[@]} )); then
+  mapfile pkgdeps < <(aur depends -n "${pkglist[@]}" | tr '\t' '\n' | sort -u)
+fi
 pkgdeps+=("${pkglist[@]}")
 
 # Remove packages from repository.
 cd "bin"
-while read pkgpackage; do
+while read -r pkgpackage; do
   repo-remove "${pkgrepo}.db.tar.gz" $pkgpackage
-done < <(comm -23 <(pacman -Slq $pkgrepo | sort) <(printf "%s" "${pkgdeps[@]}" | sort))
+done < <(comm -23 <(pacman -Slq $pkgrepo | sort) <(printf "%s\n" "${pkgdeps[@]}" | sort -u))
 cd ".."
 
 # Get package gpg keys.
 for pkgkey in ${pkgkeys[@]}; do
-  gpg --recv-keys --keyserver "hkp://ipv4.pool.sks-keyservers.net" $pkgkey
+  gpg --recv-keys --keyserver "hkps://keyserver.ubuntu.com" $pkgkey
 done
 
-# Build outdated packages.
+# Build outdated packages. --nover-argv always rebuilds command-line targets
+# (AUR RPC versions for -git packages are stale snapshots, so version checks
+# would skip them forever). --keep-going=0 lets independent packages build
+# even if others fail.
 if (( ${#pkglist[@]} )); then
-  aur sync -d $pkgrepo --root "${HOME}/bin" -n ${pkglist[@]}
+  aur sync -d $pkgrepo --root "${HOME}/bin" -n --noview --nover-argv --keep-going=0 ${pkglist[@]}
 fi
 
 # Workaround fo GH releases because colon in names not permitted
 if [[ ${DEPLOY_CUSTOM} != 1 ]]; then
   cd "bin"
-  for package in *.tar.xz; do
+  for package in *.pkg.tar.*; do
     if [[ ${package} == *':'* ]]; then
       echo "renaming ${package} and add it back to db..."
       newname=${package/:/.}

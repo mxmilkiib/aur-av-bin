@@ -1,10 +1,12 @@
-FROM archlinux/base
+FROM archlinux:base-devel
 
 # Update packages.
 RUN pacman -Syu --noconfirm
 
-# Install base-devel group.
-RUN pacman -S --needed --noconfirm base-devel
+# Install tooling needed before aurutils is installed (curl fetches the
+# existing repository database, ninja enables aur-sync --keep-going).
+# git, gnupg and jq arrive as dependencies of aurutils.
+RUN pacman -S --needed --noconfirm curl ninja
 
 # Clear cache.
 RUN pacman -Scc --noconfirm
