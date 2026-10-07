@@ -25,21 +25,21 @@ agordejo
 # hosts, routing, wine
 carla-git
 synthpod-git
-non-mixer-lv2-git
+#non-mixer-lv2-git  # ntk-git dep broken: needs dead 'libjpeg' package
 guitarix-git
-element-git
-vcvrack-git
+#element-git  # meson clones deleted 'meson-and-host-ext' branch of clap-helpers
+#vcvrack-git  # cmake_minimum_required too old for current cmake
 cardinal-git
 wineasio-git
 
 # network audio
-sonobus
+#sonobus  # VersionInfo.cpp compile error, upstream rot
 jamulus
-jack_capture
+#jack_capture  # asprintf type conflict vs modern glibc, upstream dead
 
 # daw, sequencer, tracker
-zrythm-debug-git
-lmms-git
+#zrythm-debug-git  # jack vs jack2-git dependency conflict, debug variant anyway
+#lmms-git  # zynaddsubfx build error, upstream rot
 #ossia-score-git  # build exhausts runner disk/memory, kills the job mid-compile
 #ingen-git  # drags in AUR webkit2gtk, multi-hour build that risks runner OOM
 tenacity-git
@@ -47,9 +47,9 @@ bespokesynth-git
 helio-workstation
 giada-git
 bitwig-studio
-renoise
+#renoise  # requires manual file:// download of commercial tarball
 sunvox
-milkytracker-git
+#milkytracker-git  # prepare() failure, upstream rot
 furnace-git
 
 
@@ -65,13 +65,13 @@ zam-plugins-git
 openav-artyfx-git
 
 # synth
-bristol
+#bristol  # K&R-era C breaks under modern GCC, upstream dormant
 remid.lv2-git
 stegosaurus-lv2-git
 dexed-git
 sfizz-git
 setbfree-git
-oxefmsynth-git
+#oxefmsynth-git  # needs manual-download steinberg-vst36 dependency
 
 # effects
 dragonfly-reverb-git
@@ -81,22 +81,22 @@ bshapr-git
 bslizr-git
 bchoppr-git
 bjumblr.lv2-git
-noise-repellent-git
+#noise-repellent-git  # PKGBUILD expects old upstream layout, meson.build missing
 
 # in a class of it's own
 moony-lv2-git
 
 # samplers and drums
-loopp-git
-drmr-falktx-git
-drumgizmo-git
+#loopp-git  # upstream git repo returns 404
+#drmr-falktx-git  # cmake_minimum_required too old for current cmake
+#drumgizmo-git  # steinberg VST SDK download URL dead upstream
 ninjas-git
 ninjas2-git
 konfyt-git
 geonkick-git
 shuriken
 paulxstretch
-petri-foo-git
+#petri-foo-git  # cmake_minimum_required too old for current cmake
 
 # squencers
 sequencer64-git
@@ -108,7 +108,7 @@ midimonster-git
 # audio formats and tools
 alac-git
 flacsync-git
-fmedia-git
+#fmedia-git  # ffos submodule repo requires github auth, moved/private
 fluidsynth-git
 
 # audio file naming/tagging
