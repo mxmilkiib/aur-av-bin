@@ -4,7 +4,7 @@
 ## 1
 
 # lv2 and sound libraries
-lv2-git
+lv2-git  # FIXME package() mv fails: upstream dropped eg-* example plugins
 raul-git
 suil-git
 serd-git  # FIXME needs sphinxygen meson subproject, wrap download disabled - blocks lilv/suil
@@ -29,8 +29,8 @@ synthpod-git
 guitarix-git
 #element-git  # meson clones deleted 'meson-and-host-ext' branch of clap-helpers
 #vcvrack-git  # cmake_minimum_required too old for current cmake
-cardinal-git
-wineasio-git
+cardinal-git  # FIXME prepare() cd fails: plugins/DrumKit gone upstream
+wineasio-git  # FIXME prepare() inits rtaudio submodule removed upstream
 
 # network audio
 #sonobus  # VersionInfo.cpp compile error, upstream rot
@@ -43,7 +43,7 @@ jamulus
 #ossia-score-git  # build exhausts runner disk/memory, kills the job mid-compile
 #ingen-git  # drags in AUR webkit2gtk, multi-hour build that risks runner OOM
 tenacity-git
-bespokesynth-git
+bespokesynth-git  # FIXME cmake INTERFACE_INCLUDE_DIRECTORIES path gone upstream
 helio-workstation
 giada-git
 bitwig-studio
@@ -68,7 +68,7 @@ openav-artyfx-git
 #bristol  # K&R-era C breaks under modern GCC, upstream dormant
 remid.lv2-git
 stegosaurus-lv2-git
-dexed-git
+dexed-git  # FIXME submodule url points at missing src/vst3_doc repo
 sfizz-git
 setbfree-git
 #oxefmsynth-git  # needs manual-download steinberg-vst36 dependency

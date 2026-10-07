@@ -14,11 +14,11 @@ RUN pacman -Syu --noconfirm
 # git, gnupg and jq arrive as dependencies of aurutils.
 # Preinstall deps that PKGBUILDs omit from makedepends so configure-time
 # checks still succeed: mandoc (serd-git), rapidjson (tenacity-git),
-# qt5-svg (qjackctl-git), glib2-devel's glib-genmarshal (ganv-git),
-# lib32-jack2 (wineasio-git; pacman cannot pick the lib32-jack provider
-# non-interactively).
+# qt5-svg (qjackctl-git), glib2-devel's glib-genmarshal plus
+# gobject-introspection (ganv-git), lib32-jack2 (wineasio-git; pacman cannot
+# pick the lib32-jack provider non-interactively).
 RUN pacman -S --needed --noconfirm ccache curl git mandoc ninja pcre rapidjson \
-    qt5-svg glib2-devel lib32-jack2
+    qt5-svg glib2-devel gobject-introspection lib32-jack2
 
 # Allow PKGBUILDs to clone git submodules over file:// transport (blocked by
 # default since CVE-2022-39253; needed by cardinal-git, bespokesynth-git,
