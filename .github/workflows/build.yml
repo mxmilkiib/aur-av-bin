@@ -10,6 +10,11 @@ on:
 permissions:
   contents: write
 
+# Serialise runs: two concurrent builds race on release-asset uploads.
+concurrency:
+  group: build
+  cancel-in-progress: false
+
 env:
   PKG_TAG: repository
 
