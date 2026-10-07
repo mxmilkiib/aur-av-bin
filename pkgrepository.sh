@@ -21,8 +21,15 @@ else
 fi
 cd ".."
 
-# Enable multilib repository.
-sudo sed -i -e "/\[multilib\]/,/Include/s/^#//" "/etc/pacman.conf"
+# Enable multilib repository (the archlinux image ships no commented
+# section to uncomment, so append it if absent).
+if ! grep -q '^\[multilib\]' "/etc/pacman.conf"; then
+  sudo tee -a "/etc/pacman.conf" << 'EOF'
+
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+EOF
+fi
 
 # Add configuration for repository. DisableSandbox lets the sandboxed
 # pacman 7 downloader reach the file:// server inside ~pkguser (which is
