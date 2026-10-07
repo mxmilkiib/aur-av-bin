@@ -9,13 +9,19 @@ RUN pacman -Syu --noconfirm
 # Install tooling needed before aurutils is installed (curl fetches the
 # existing repository database, ninja enables aur-sync --keep-going).
 # git, gnupg and jq arrive as dependencies of aurutils.
-# mandoc band-aids PKGBUILDs missing it from makedepends (e.g. serd-git's
-# meson now requires it at build time). rapidjson likewise for tenacity-git.
-RUN pacman -S --needed --noconfirm ccache curl git mandoc ninja pcre rapidjson
+# Preinstall deps that PKGBUILDs omit from makedepends so configure-time
+# checks still succeed: mandoc (serd-git), rapidjson (tenacity-git),
+# qt5-svg (qjackctl-git), glib2-devel's glib-genmarshal (ganv-git),
+# lib32-jack2 (wineasio-git; pacman cannot pick the lib32-jack provider
+# non-interactively).
+RUN pacman -S --needed --noconfirm ccache curl git mandoc ninja pcre rapidjson \
+    qt5-svg glib2-devel lib32-jack2
 
 # Allow PKGBUILDs to clone git submodules over file:// transport (blocked by
-# default since CVE-2022-39253; needed by cardinal-git, bespokesynth-git, dexed-git).
-RUN git config --system protocol.file.allow always
+# default since CVE-2022-39253; needed by cardinal-git, bespokesynth-git,
+# dexed-git). makepkg overrides GIT_CONFIG_SYSTEM, so write its config file.
+RUN mkdir -p /etc/makepkg.d && \
+    git config --file /etc/makepkg.d/gitconfig protocol.file.allow always
 
 # Clear cache.
 RUN pacman -Scc --noconfirm
