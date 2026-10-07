@@ -1,7 +1,9 @@
 ## smoke test
 bchoppr-git
-streamlink-git
+sord-git
 raysession-git
+
+#streamlink-git  # broken AUR pkgbuild: script/build-shell-completions.sh gone upstream
 
 
 ## numbers for readding packages en masse
