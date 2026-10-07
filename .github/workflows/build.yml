@@ -35,6 +35,7 @@ jobs:
           mkdir -p .ccache
           docker run -d -t --name aurci \
             -e CCACHE_MAXSIZE=2G \
+            -e GIT_TERMINAL_PROMPT=0 \
             -v "$GITHUB_WORKSPACE/.ccache:/home/pkguser/.ccache" \
             aurci bash
           docker exec -u root aurci chown pkguser:pkguser /home/pkguser/.ccache
@@ -52,23 +53,29 @@ jobs:
       - name: Prepare repository
         run: docker exec aurci bash pkgrepository.sh "$GITHUB_REPOSITORY" "$PKG_TAG"
 
+      # The pkglist is split into batches; each batch builds in the same
+      # container and publishes to the release afterwards. A runner dying
+      # mid-run then loses at most one batch instead of everything.
       - name: Build packages
-        run: docker exec aurci bash pkgbuild.sh "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
-
-      - name: Retrieve packages
-        if: always()
-        run: docker cp aurci:/home/pkguser/bin "$PKG_TAG"
-
-      - name: Deploy to GitHub Releases
-        if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -o pipefail
           if ! gh release view "$PKG_TAG" >/dev/null 2>&1; then
             gh release create "$PKG_TAG" --target "$GITHUB_SHA" \
               --title "$PKG_TAG" --notes "Binary package repository"
           fi
-          cd "$PKG_TAG"
-          for f in *; do
-            [ -f "$f" ] && gh release upload "$PKG_TAG" "$f" --clobber
+          sed -e 's/#.*//' -e '/^\s*$/d' pkglist | split -n l/6 -d - .pkgbatch.
+          failed=0
+          for c in .pkgbatch.*; do
+            echo "::group::Batch $c: $(tr '\n' ' ' < $c)"
+            docker cp "$c" aurci:/home/pkguser/pkgbatch
+            docker exec aurci bash pkgbuild.sh "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" || failed=1
+            mkdir -p "$PKG_TAG"
+            docker cp aurci:/home/pkguser/bin/. "$PKG_TAG"
+            (cd "$PKG_TAG" && for f in *; do
+              [ -f "$f" ] && gh release upload "$PKG_TAG" "$f" --clobber
+            done)
+            echo "::endgroup::"
           done
+          exit $failed

@@ -25,6 +25,15 @@ done
 mapfile -t pkglist < "pkglist"
 mapfile -t pkgkeys < "pkgkeys"
 
+# Packages to build this run: pkgbatch file if present, else the full list.
+declare -a pkgbatch=()
+if [ -f "pkgbatch" ]; then
+  sed -i -e "/\s*#.*/s/\s*#.*//" -e "/^\s*$/d" pkgbatch
+  mapfile -t pkgbatch < "pkgbatch"
+else
+  pkgbatch=("${pkglist[@]}")
+fi
+
 # Create package list with dependencies. aur-depends prints
 # "pkgname<TAB>depends" pairs; flatten both columns to a plain list.
 if (( ${#pkglist[@]} )); then
@@ -48,8 +57,8 @@ done
 # (AUR RPC versions for -git packages are stale snapshots, so version checks
 # would skip them forever). --keep-going=0 lets independent packages build
 # even if others fail.
-if (( ${#pkglist[@]} )); then
-  aur sync -d $pkgrepo --root "${HOME}/bin" -n --noview --nover-argv --keep-going=0 -C ${pkglist[@]}
+if (( ${#pkgbatch[@]} )); then
+  aur sync -d $pkgrepo --root "${HOME}/bin" -n --noview --nover-argv --keep-going=0 -C ${pkgbatch[@]}
 fi
 
 # Workaround fo GH releases because colon in names not permitted
