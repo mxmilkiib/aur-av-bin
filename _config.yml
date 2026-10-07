@@ -1,3 +1,5 @@
+theme: jekyll-theme-primer
+
 exclude:
 - setup.sh
 - Gemfile

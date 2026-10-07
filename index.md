@@ -2,10 +2,10 @@
 title: "AURCI"
 ---
 
-Use [Travis CI] for building and packaging a few [AUR] packages and deploy them
+Use [GitHub Actions] for building and packaging [AUR] packages and deploy them
 to [GitHub Releases] so it can be used as repository in [Arch Linux].
 
-[![Build Status]](https://travis-ci.com/{{ site.github.owner_name }}/{{ site.github.project_title }})
+[![Build Status]](https://github.com/mxmilkiib/aur-av-bin/actions/workflows/build.yml)
 
 ## Use repository
 
@@ -33,7 +33,7 @@ pacman -S <package_name>
 ## Custom settings
 
 If you need to customize the build, you can add your own `makepkg.conf`
-in the root directory of your repository, the Travis script will copy and use it
+in the root directory of your repository, the workflow will copy and use it
 during the build process.
 
 ## Upstream contributions
@@ -48,6 +48,6 @@ If you want to contribute back some new feature you need:
 
 [Arch Linux]:       https://www.archlinux.org
 [AUR]:              https://aur.archlinux.org
-[Build Status]:     https://travis-ci.com/{{ site.github.owner_name }}/{{ site.github.project_title }}.svg?branch=master
-[Travis CI]:        https://travis-ci.com/{{ site.github.owner_name }}/{{ site.github.project_title }}
-[GitHub Releases]: {{ site.github.owner_url }}/{{ site.github.project_title }}/releases
+[Build Status]:     https://github.com/mxmilkiib/aur-av-bin/actions/workflows/build.yml/badge.svg
+[GitHub Actions]:   https://github.com/mxmilkiib/aur-av-bin/actions/workflows/build.yml
+[GitHub Releases]:  {{ site.github.owner_url }}/{{ site.github.project_title }}/releases

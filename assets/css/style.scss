@@ -1,0 +1,17 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+body {
+  font-size: 18px;
+}
+
+.markdown-body {
+  font-size: 18px;
+}
+
+.markdown-body pre,
+.markdown-body code {
+  font-size: 15px;
+}
