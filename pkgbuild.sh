@@ -56,9 +56,11 @@ done
 # Build outdated packages. --nover-argv always rebuilds command-line targets
 # (AUR RPC versions for -git packages are stale snapshots, so version checks
 # would skip them forever). --keep-going=0 lets independent packages build
-# even if others fail.
+# even if others fail. --auto-key-retrieve imports validpgpkeys as needed;
+# --nocheck skips upstream test suites (flaky in a bare container, and the
+# pipeline ships artifacts, not test verdicts).
 if (( ${#pkgbatch[@]} )); then
-  aur sync -d $pkgrepo --root "${HOME}/bin" -n --noview --nover-argv --keep-going=0 -C ${pkgbatch[@]}
+  aur sync -d $pkgrepo --root "${HOME}/bin" -n --noview --nover-argv --keep-going=0 -CK ${pkgbatch[@]}
 fi
 
 # Workaround fo GH releases because colon in names not permitted
