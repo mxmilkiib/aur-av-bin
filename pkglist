@@ -40,7 +40,7 @@ jack_capture
 # daw, sequencer, tracker
 zrythm-debug-git
 lmms-git
-ossia-score-git
+#ossia-score-git  # build exhausts runner disk/memory, kills the job mid-compile
 #ingen-git  # drags in AUR webkit2gtk, multi-hour build that risks runner OOM
 tenacity-git
 bespokesynth-git
