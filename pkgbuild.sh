@@ -49,7 +49,7 @@ done
 # would skip them forever). --keep-going=0 lets independent packages build
 # even if others fail.
 if (( ${#pkglist[@]} )); then
-  aur sync -d $pkgrepo --root "${HOME}/bin" -n --noview --nover-argv --keep-going=0 ${pkglist[@]}
+  aur sync -d $pkgrepo --root "${HOME}/bin" -n --noview --nover-argv --keep-going=0 -C ${pkglist[@]}
 fi
 
 # Workaround fo GH releases because colon in names not permitted
