@@ -6,7 +6,7 @@ RUN pacman -Syu --noconfirm
 # Install tooling needed before aurutils is installed (curl fetches the
 # existing repository database, ninja enables aur-sync --keep-going).
 # git, gnupg and jq arrive as dependencies of aurutils.
-RUN pacman -S --needed --noconfirm curl git ninja
+RUN pacman -S --needed --noconfirm curl git ninja pcre
 
 # Clear cache.
 RUN pacman -Scc --noconfirm
