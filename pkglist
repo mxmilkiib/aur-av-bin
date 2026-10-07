@@ -1,133 +1,139 @@
+## smoke test
+bchoppr-git
+streamlink-git
+raysession-git
+
+
 ## numbers for readding packages en masse
 
 
 ## 1
 
 # lv2 and firewire basics
-lv2-git
-raul-git
-suil-git
-serd-git
-lilv-git
-sord-git
-ganv-git
-libffado-svn
+#lv2-git
+#raul-git
+#suil-git
+#serd-git
+#lilv-git
+#sord-git
+#ganv-git
+#libffado-svn
 
 # audio system and control
-jack2-git
-cadence-git
-qjackctl-git
-pavucontrol-compact-git
+#jack2-git
+#cadence-git
+#qjackctl-git
+#pavucontrol-compact-git
 
 # session management
-raysession-git
+#raysession-git
 
 # host, routing, etc.
-carla-git
-synthpod-git
-non-mixer-lv2-git
-#guitarix-git
-element-git
-vcvrack-git
+#carla-git
+#synthpod-git
+#non-mixer-lv2-git
+##guitarix-git
+#element-git
+#vcvrack-git
 
 # daw
-zrythm-debug-git
+#zrythm-debug-git
 
 
 
 ## 2
 
 # collections
-dpf-plugins-git
-gxplugins-lv2-git
-invada-studio-plugins-lv2
-tal-plugins
+#dpf-plugins-git
+#gxplugins-lv2-git
+#invada-studio-plugins-lv2
+#tal-plugins
 
 # synth
-surge-synthesizer-git
-bristol
-remid.lv2-git
-stegosaurus-lv2-git
+#surge-synthesizer-git
+#bristol
+#remid.lv2-git
+#stegosaurus-lv2-git
 
 # effects
-hybridreverb-git
-dragonfly-reverb-git
-wolf-shaper-git
-bshapr-git
-bslizr-git
-bchoppr-git
-bjumblr.lv2-git
+#hybridreverb-git
+#dragonfly-reverb-git
+#wolf-shaper-git
+#bshapr-git
+#bslizr-git
+#bchoppr-git
+#bjumblr.lv2-git
 
 # in a class of it's own
-moony-lv2-git
+#moony-lv2-git
 
 # samplers etc.
-loopp-git
-drmr-falktx-git
-drumgizmo-git
-ninjas-git
-ninjas2-git
-konfyt-git
+#loopp-git
+#drmr-falktx-git
+#drumgizmo-git
+#ninjas-git
+#ninjas2-git
+#konfyt-git
 
 # squencers
-sequencer64-git
-bsequencer-git
+#sequencer64-git
+#bsequencer-git
 
 # midi etc 
-midimonster-git
+#midimonster-git
 
 # audio formats and tools
-alac-git
-flacsync-git
-fmedia-git
-streamlink-git
+#alac-git
+#flacsync-git
+#fmedia-git
+#streamlink-git
 
 # audio file naming/tagging
-picard-git
-picard-plugins-git
+#picard-git
+#picard-plugins-git
 
 # misc
-imlib2-webp-git
-polybar-git
+#imlib2-webp-git
+#polybar-git
 
 
 
 # visual
-projectm-git
+#projectm-git
 
 
 
 ## not working atm
 
 ## build problem - https://github.com/kmatheussen/radium/issues/1235
-#radium
+##radium
 
 ## too big to build
-#mixxx-git
+##mixxx-git
 
 ## dependency conflift problem
-#ingen-git
+##ingen-git
 
 ## build problem on Arch
-#beast-git
+##beast-git
 
 # missing a dependency for rpc.h
-#pd-extended
+##pd-extended
 
 ## output log too long
-#pd-l2ork
+##pd-l2ork
 
 ## missing dependencies
-#lmms-git
+##lmms-git
 
 ## 
-#ossia-score-git
+##ossia-score-git
 
 ## nah like, too big :)
-# ardour-git
+## ardour-git
 
 ## missing deps
-#pizmidi-git
+##pizmidi-git
 
 # broken atm
-##purr-data
+###purr-data
