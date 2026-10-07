@@ -1,7 +1,10 @@
 FROM archlinux:base-devel
 
 # Enable multilib for lib32-* dependencies (e.g. wineasio-git needs lib32-jack).
-RUN sed -i '/\[multilib\]/,/Include/s/^#//' /etc/pacman.conf
+# Append rather than uncomment: the image's pacman.conf may not carry the
+# commented block.
+RUN grep -qxF '[multilib]' /etc/pacman.conf || \
+    printf '\n[multilib]\nInclude = /etc/pacman.d/mirrorlist\n' >> /etc/pacman.conf
 
 # Update packages.
 RUN pacman -Syu --noconfirm
