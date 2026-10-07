@@ -1,42 +1,31 @@
-# aurci
+# aur-av-bin
 
-Use [Travis CI] for building and packaging a few [AUR] packages and deploy them
-to GitHub Releases so it can be used as repository in [Arch Linux].
+**aur-av-bin** is driven by [aurutils](https://github.com/aurutils/aurutils),
+using [GitHub Actions](https://github.com/mxmilkiib/aur-av-bin/actions) to build
+binary [Arch Linux](https://www.archlinux.org/) packages from
+[AUR](https://aur.archlinux.org/) entries and deploy them to
+[GitHub Releases](https://github.com/mxmilkiib/aur-av-bin/releases), which can
+be used through pacman by adding a repository in pacman.conf.
 
-## Forking repository
+## How to use the repository on your machine
 
-For build the [AUR] packages of your election:
+To use the aur-av-bin project as custom repository in your Arch Linux or
+Arch-derived distro install, add the following to the end of the
+/etc/pacman.conf file:
 
-- Fork this GitHub repository.
-- [Enable Travis CI] on it.
-- Switch to a new personal branch, e.g.: `git checkout -b personal` (*)
-- Edit `pkglist`.
-- Generate a [personal access token] with scope `public_repo`.
+```
+[aur-av-bin]
+SigLevel = Optional TrustAll
+Server = https://github.com/mxmilkiib/aur-av-bin/releases/download/repository
+```
 
-On [Travis CI] repository settings:
+Then on the command line:
 
-- Disable build pull request updates, for security.
-- Add a `GITHUB_TOKEN`  environment variable with the personal access token code
-  as value and set it as hidden.
-- Add a `DEPLOY_BRANCH` environment variable
-  with the name of your personal branch as value. (*)
-- Optionally, enable a cron job in Travis CI repository settings.
+```
+pacman -Sy            # Refresh package database.
+pacman -Sl aur-av-bin # Show packages in repository.
+pacman -S {package}   # Install a package.
+```
 
-(*) These two simple steps was added to let the `master` repository to remain
-    clean to permit possible future contributions if you'll need to propose
-    a new feature.
-
-![Travis Settings Screenshot](screenshot.png)
-
-## Use repository
-
-For user-specific instructions enable `gh-pages` on your fork, or check [here]
-for generic ones.
-
-[Arch Linux]: https://www.archlinux.org/
-[AUR]:        https://aur.archlinux.org/
-[here]:       https://localnet.github.io/aurci/
-[Travis CI]:  https://travis-ci.com/
-
-[personal access token]: https://github.com/settings/tokens/new
-[Enable Travis CI]:      https://github.com/settings/installations
+NOTE: The [list](pkglist) of currently maintained packages could change at
+any moment, though probably won't.
