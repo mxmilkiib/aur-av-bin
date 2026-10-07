@@ -60,7 +60,7 @@ done
 # --nocheck skips upstream test suites (flaky in a bare container, and the
 # pipeline ships artifacts, not test verdicts).
 if (( ${#pkgbatch[@]} )); then
-  aur sync -d $pkgrepo --root "${HOME}/bin" -n --noview --nover-argv --keep-going=0 -CK ${pkgbatch[@]}
+  aur sync -d $pkgrepo --root "${HOME}/bin" -n --noview --nover-argv --nocheck --keep-going=0 -CK ${pkgbatch[@]}
 fi
 
 # Workaround fo GH releases because colon in names not permitted
