@@ -1,141 +1,159 @@
-## smoke test
-bchoppr-git
-sord-git
-raysession-git
-
-#streamlink-git  # broken AUR pkgbuild: script/build-shell-completions.sh gone upstream
-
-
 ## numbers for readding packages en masse
 
 
 ## 1
 
-# lv2 and firewire basics
-#lv2-git
-#raul-git
-#suil-git
-#serd-git
-#lilv-git
-#sord-git
-#ganv-git
-#libffado-svn
+# lv2 and sound libraries
+lv2-git
+raul-git
+suil-git
+serd-git
+lilv-git
+sord-git
+ganv-git
 
 # audio system and control
-#jack2-git
-#cadence-git
-#qjackctl-git
-#pavucontrol-compact-git
+jack2-git
+qjackctl-git
+pavucontrol-compact-git
 
 # session management
-#raysession-git
+raysession-git
+patchance
+agordejo
 
-# host, routing, etc.
-#carla-git
-#synthpod-git
-#non-mixer-lv2-git
-##guitarix-git
-#element-git
-#vcvrack-git
+# hosts, routing, wine
+carla-git
+synthpod-git
+non-mixer-lv2-git
+guitarix-git
+element-git
+vcvrack-git
+cardinal-git
+wineasio-git
 
-# daw
-#zrythm-debug-git
+# network audio
+sonobus
+jamulus
+jack_capture
+
+# daw, sequencer, tracker
+zrythm-debug-git
+lmms-git
+ossia-score-git
+ingen-git
+tenacity-git
+bespokesynth-git
+helio-workstation
+giada-git
+bitwig-studio
+renoise
+sunvox
+milkytracker-git
+furnace-git
 
 
 
 ## 2
 
 # collections
-#dpf-plugins-git
-#gxplugins-lv2-git
-#invada-studio-plugins-lv2
-#tal-plugins
+dpf-plugins-git
+gxplugins-lv2-git
+invada-studio-plugins-lv2
+tal-plugins
+zam-plugins-git
+openav-artyfx-git
 
 # synth
-#surge-synthesizer-git
-#bristol
-#remid.lv2-git
-#stegosaurus-lv2-git
+bristol
+remid.lv2-git
+stegosaurus-lv2-git
+dexed-git
+sfizz-git
+setbfree-git
+oxefmsynth-git
 
 # effects
-#hybridreverb-git
-#dragonfly-reverb-git
-#wolf-shaper-git
-#bshapr-git
-#bslizr-git
-#bchoppr-git
-#bjumblr.lv2-git
+dragonfly-reverb-git
+wolf-shaper-git
+wolf-spectrum-git
+bshapr-git
+bslizr-git
+bchoppr-git
+bjumblr.lv2-git
+noise-repellent-git
 
 # in a class of it's own
-#moony-lv2-git
+moony-lv2-git
 
-# samplers etc.
-#loopp-git
-#drmr-falktx-git
-#drumgizmo-git
-#ninjas-git
-#ninjas2-git
-#konfyt-git
+# samplers and drums
+loopp-git
+drmr-falktx-git
+drumgizmo-git
+ninjas-git
+ninjas2-git
+konfyt-git
+geonkick-git
+shuriken
+paulxstretch
+petri-foo-git
 
 # squencers
-#sequencer64-git
-#bsequencer-git
+sequencer64-git
+bsequencer-git
 
-# midi etc 
-#midimonster-git
+# midi etc
+midimonster-git
 
 # audio formats and tools
-#alac-git
-#flacsync-git
-#fmedia-git
-#streamlink-git
+alac-git
+flacsync-git
+fmedia-git
+fluidsynth-git
 
 # audio file naming/tagging
-#picard-git
-#picard-plugins-git
+picard-git
+picard-plugins-git
 
 # misc
-#imlib2-webp-git
-#polybar-git
-
-
+polybar-git
 
 # visual
-#projectm-git
+projectm-git
+glava
 
 
 
-## not working atm
+## known broken or unavailable
 
 ## build problem - https://github.com/kmatheussen/radium/issues/1235
-##radium
+#radium
 
-## too big to build
-##mixxx-git
+## too big to build in CI
+#mixxx-git
+#ardour-git
 
-## dependency conflift problem
-##ingen-git
+## broken AUR pkgbuild: script/build-shell-completions.sh gone upstream
+#streamlink-git
 
-## build problem on Arch
-##beast-git
+## SVN upstream dead
+#libffado-svn
 
-# missing a dependency for rpc.h
-##pd-extended
+## upstream renamed to surge-xt, now in official [extra]
+#surge-synthesizer-git
 
-## output log too long
-##pd-l2ork
+## broken atm
+#purr-data
 
-## missing dependencies
-##lmms-git
+## deleted from the AUR
+#cadence-git
+#hybridreverb-git
+#imlib2-webp-git
+#pizmidi-git
+#beast-git
+#pd-extended
+#pd-l2ork
 
-## 
-##ossia-score-git
-
-## nah like, too big :)
-## ardour-git
-
-## missing deps
-##pizmidi-git
-
-# broken atm
-###purr-data
+## stable versions now in official repos, no AUR package needed
+# yabridge, reaper, cava, jacktrip, furnace, x42-plugins, eq10q,
+# stochas, zam-plugins, cardinal
