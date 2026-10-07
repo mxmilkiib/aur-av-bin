@@ -38,7 +38,7 @@ jobs:
             -e GIT_TERMINAL_PROMPT=0 \
             -v "$GITHUB_WORKSPACE/.ccache:/home/pkguser/.ccache" \
             aurci bash
-          docker exec -u root aurci chown pkguser:pkguser /home/pkguser/.ccache
+          docker exec -u root aurci chown -R pkguser:pkguser /home/pkguser/.ccache
 
       - name: Copy files
         run: |

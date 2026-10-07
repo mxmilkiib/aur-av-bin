@@ -7,7 +7,7 @@
 lv2-git
 raul-git
 suil-git
-serd-git
+serd-git  # FIXME needs sphinxygen meson subproject, wrap download disabled - blocks lilv/suil
 lilv-git
 sord-git
 ganv-git
