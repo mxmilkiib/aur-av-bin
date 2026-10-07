@@ -20,11 +20,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache ccache
+        uses: actions/cache@v4
+        with:
+          path: .ccache
+          key: ccache-${{ github.run_id }}
+          restore-keys: ccache-
+
       - name: Build image
         run: docker build -t aurci .
 
       - name: Start container
-        run: docker run -d -t --name aurci aurci bash
+        run: |
+          mkdir -p .ccache
+          docker run -d -t --name aurci \
+            -e CCACHE_MAXSIZE=2G \
+            -v "$GITHUB_WORKSPACE/.ccache:/home/pkguser/.ccache" \
+            aurci bash
+          docker exec -u root aurci chown pkguser:pkguser /home/pkguser/.ccache
 
       - name: Copy files
         run: |
