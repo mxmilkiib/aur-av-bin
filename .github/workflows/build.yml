@@ -1,0 +1,61 @@
+name: build
+
+on:
+  push:
+    branches: [aur-av-bin]
+  workflow_dispatch:
+  schedule:
+    - cron: "23 5 * * *"
+
+permissions:
+  contents: write
+
+env:
+  PKG_TAG: repository
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t aurci .
+
+      - name: Start container
+        run: docker run -d -t --name aurci aurci bash
+
+      - name: Copy files
+        run: |
+          docker cp pkgrepository.sh aurci:/home/pkguser/
+          docker cp pkgbuild.sh aurci:/home/pkguser/
+          docker cp pkglist aurci:/home/pkguser/
+          docker cp pkgkeys aurci:/home/pkguser/
+          if [ -f makepkg.conf ]; then
+            docker cp makepkg.conf aurci:/home/pkguser/.makepkg.conf;
+          fi
+
+      - name: Prepare repository
+        run: docker exec aurci bash pkgrepository.sh "$GITHUB_REPOSITORY" "$PKG_TAG"
+
+      - name: Build packages
+        run: docker exec aurci bash pkgbuild.sh "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
+
+      - name: Retrieve packages
+        if: always()
+        run: docker cp aurci:/home/pkguser/bin "$PKG_TAG"
+
+      - name: Deploy to GitHub Releases
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! gh release view "$PKG_TAG" >/dev/null 2>&1; then
+            gh release create "$PKG_TAG" --target "$GITHUB_SHA" \
+              --title "$PKG_TAG" --notes "Binary package repository"
+          fi
+          cd "$PKG_TAG"
+          for f in *; do
+            [ -f "$f" ] && gh release upload "$PKG_TAG" "$f" --clobber
+          done
